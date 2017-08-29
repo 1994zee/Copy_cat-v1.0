@@ -44,7 +44,7 @@ namespace Copy_cat
                 gc.FindElement(By.Name("Password")).SendKeys(Keys.Enter);
                 //.............
             }
-            catch (Exception ex)
+            catch
             {
                 Console.WriteLine("Login into clientspace failed.");
             }
@@ -63,7 +63,7 @@ namespace Copy_cat
             {
                 gc.FindElement(By.XPath("//*[@id='dropdownMenu1']")).Click();
                 gc.FindElement(By.XPath("//*[@id='Category']")).SendKeys("Duplicate");
-               // System.Threading.Thread.Sleep(2000);
+                System.Threading.Thread.Sleep(2000);
                 gc.FindElement(By.XPath("//*[@id='Category']")).SendKeys(Keys.Enter);
                 System.Threading.Thread.Sleep(3000);
             }
@@ -92,10 +92,21 @@ namespace Copy_cat
                         i++;
                     }
                     string number = gc.FindElement(By.XPath("//*[@id='orgSearchList']/div[3]/span")).Text;
+                    number=number.ToUpper();
+                    string test = "No items to display";
+                    test = test.ToUpper();
+                    if(number==test)
+                    {
+
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("No data found to be processed..!");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        break;
+                    }
                     number = number.Replace("of ", "").Replace("- ", "").Replace("items", "");
                     string[] parts = number.Split(' ');
                     Console.WriteLine(parts[1] + parts[2]);
-                    System.Threading.Thread.Sleep(2000);
+                    System.Threading.Thread.Sleep(1000);
                     if(parts[1]==parts[2])
                     {
                         Console.WriteLine("End of data");
@@ -137,11 +148,17 @@ namespace Copy_cat
                     gc.FindElement(By.XPath("//*[@id='orgSearchList']/div[2]/table/tbody/tr/td[1]/div/a/span")).Click();
                     System.Threading.Thread.Sleep(4000);
                     gc.FindElement(By.XPath("//*[@id='tabGeneral']/div[2]/div[1]/div[2]/div/span")).Click();
+                    System.Threading.Thread.Sleep(3000);
+                    gc.FindElement(By.XPath("//*[@id='btnSave']")).Click();
                     System.Threading.Thread.Sleep(5000);
                 }
                 catch
                 {
-
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Data updation failed for :");
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    r.print();
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
 
             }
